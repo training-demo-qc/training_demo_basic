@@ -1,0 +1,53 @@
+{
+  "name": "training_test",
+  "email_notifications": {
+    "no_alert_for_skipped_runs": false
+  },
+  "webhook_notifications": {},
+  "timeout_seconds": 0,
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "dbt_task",
+      "run_if": "ALL_SUCCESS",
+      "dbt_task": {
+        "project_directory": "dbt",
+        "commands": [
+          "dbt deps",
+          "dbt source freshness",
+          "dbt build"
+        ],
+        "schema": "dev",
+        "warehouse_id": "aaab53a7ba3ac62c",
+        "catalog": "nexus_training",
+        "source": "GIT"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "environment_key": "dbt-default"
+    }
+  ],
+  "git_source": {
+    "git_url": "https://dev.azure.com/dev-hoffmann-group-digital/DSC%20-%20Databricks/_git/dbt_training_basic?path=%2Fdbt&version=GBmain&_a=contents",
+    "git_provider": "azureDevOpsServices",
+    "git_branch": "janek"
+  },
+  "queue": {
+    "enabled": true
+  },
+  "run_as": {
+    "service_principal_name": "e407aabd-b21b-455a-9742-43b9416b5eed"
+  },
+  "environments": [
+    {
+      "environment_key": "dbt-default",
+      "spec": {
+        "client": "3",
+        "dependencies": [
+          "dbt-databricks>=1.0.0,<2.0.0"
+        ]
+      }
+    }
+  ],
+  "performance_target": "STANDARD"
+}

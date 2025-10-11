@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: training_input
+    schema: training_input
+    tables:
+      - name: t_output_bw_invoice
+        freshness:
+          warn_after:
+            count: 1
+            period: day
+          error_after:
+            count: 4
+            period:  day
+        loaded_at_field: _record_processing_time::timestamp
+      - name: t_output_material_master
+        
