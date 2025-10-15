@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: t_core_invoice_item
+    columns:
+      - name: calendar_day
+        data_tests:
+          - not_null
+          - unique

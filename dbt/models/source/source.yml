@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: training_input
+    schema: training_input
+    config:
+      enabled: true
+    tables:
+      - name: t_output_bw_invoice
+        columns:
+          - name: nexus_invoice_id
+            data_tests:
+              - not_null
+              - unique
+        freshness:
+          warn_after:
+            count: 1
+            period: day
+          error_after:
+            count: 100
+            period: day
+        loaded_at_field: _record_processing_time::timestamp
+      - name: t_output_material_master 

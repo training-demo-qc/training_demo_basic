@@ -1,0 +1,31 @@
+
+
+models:
+  - name: v_output_invoice_item
+    description: this is the view for invoice items
+    config:
+      enabled: true
+    columns:
+      - name: nexus_invoice_id
+        description: unique invoice int key
+      - name: nexus_material_id
+        description: unique key from material table
+        data_tests:
+          - not_null:
+              config: 
+                severity: error
+                error_if: ">3000"
+                warn_if: ">10"
+      - name: header_id
+        data_tests:
+          - relationships:
+              field: header_id
+              to: ref('t_output_invoice_header')
+      - name: own_brand
+        description: '3 brands Garant, manufacturer''s brand, Holex'
+        data_tests:
+          - dbt_utils.expression_is_true:
+              expression: in ("Garant", "manufacturer's brand", "Holex")
+          - not_null:
+              config:
+                store_failures: true
